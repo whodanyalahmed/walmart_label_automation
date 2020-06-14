@@ -31,9 +31,8 @@ def delete_dup_file():
 
 
 def find_file():
-    items = os.listdir(from_path)
-    filename= None
     while(True):
+        items = os.listdir(from_path)
         for names in items:
             if names.startswith("ItemReport"):
                 filename = names
@@ -41,7 +40,6 @@ def find_file():
             else:
                 print("info: waiting for file to download")
                 time.sleep(5)
-                break
 
 
 
@@ -119,6 +117,6 @@ if(os.path.exists(from_path)):
     else:
         from_path = from_path+"\\"+report_fname
 shutil.move(from_path,des_path)
-    print("Success: moving file.")
+print("Success: moving file.")
 
 print("\n\nComplete....")
