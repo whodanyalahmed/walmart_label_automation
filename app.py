@@ -21,8 +21,8 @@ def delete_dup_file():
         if names.startswith("ItemReport"):
             full_file_path = os.path.join(from_path, names)
             file_to_del[names] = full_file_path
-        else:
-            print("info: no duplicate files found")
+        # else:
+        #     print("info: no duplicate files found")
     # print("Deleting: Some file with the same name is already there")
     for name,path in file_to_del.items():
             print("Deleting: "+name+" file with the same name is already there")
@@ -30,7 +30,7 @@ def delete_dup_file():
             print("success: Done Deleting"+name)
 
 
-def find_file(from_path):
+def find_file():
     while(True):
         items = os.listdir(from_path)
         for names in items:
@@ -85,10 +85,10 @@ email = driver.find_element_by_xpath("//input[@class='form-control__formControl_
 
 while(True):
     if(driver.title == "Retail Link"):
-        print("waiting: user input...")
+        print("\nwaiting: user input...")
         time.sleep(5)
     else:
-        print("success: Going to dashboard")
+        print("\nsuccess: Going to dashboard")
         break
 
 # click download
@@ -108,7 +108,7 @@ print("\nSuccess: Clicked download report")
 
 time.sleep(2)
 # Move from downloads to this folder
-report_fname= find_file(des_path)
+report_fname= find_file()
 
 if(os.path.exists(from_path)):
     if platform == "linux" or platform == "linux2":
@@ -116,11 +116,11 @@ if(os.path.exists(from_path)):
     else:
         from_path = from_path+"\\"+report_fname
 shutil.move(from_path,des_path)
-print("Success: moving file.")
+print("\nSuccess: moving file.")
 
 
 driver.close()
-print("success: closed window.")
+print("\nsuccess: closed window.")
 
 time.sleep(3)
 
