@@ -1,4 +1,4 @@
-import os,sys,shutil,zipfile,time
+import os,sys,shutil,zipfile,time,pandas
 from sys import platform
 # des_path = sys.path[0]
 
@@ -30,16 +30,22 @@ from sys import platform
 # current working path
 des_path = sys.path[0]
     
-def find_file():
+def find_file(des_path):
     items = os.listdir(des_path)
     for names in items:
         if names.startswith("ItemReport"):
-            print(names)
             filename = names
             return filename
-        else:
-            print("info: waiting for file to download")
+        # else:
+            # print("info: waiting for file to download")
 
-report_fname= find_file()
+report_fname= find_file(des_path)
 with zipfile.ZipFile(os.path.join(des_path,report_fname),"r") as zip_ref:
     zip_ref.extractall("zip")
+
+zip_dir = os.path.join(des_path,"zip")
+csv_fname= find_file(zip_dir)
+# print(zip_dir)
+
+df = pandas.read_csv(os.path.join(zip_dir,csv_fname))
+print(df)

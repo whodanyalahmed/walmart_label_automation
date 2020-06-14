@@ -1,6 +1,6 @@
 from selenium import webdriver
 import selenium
-import time,sys,os,shutil,zipfile
+import time,sys,os,shutil,zipfile,pandas
 from sys import platform
 
 
@@ -16,7 +16,7 @@ def resource_path(relative_path):
 def delete_dup_file():
     prompt = input("prompt: You wanted to Delete all files with the name ItemReport in Downloads:(y/n) ")
     if(prompt == "y" or prompt == "Y"):
-        print("info: Checking duplicate files. ")
+        print("\ninfo: Checking duplicate files. ")
         file_to_del = {}
         items = os.listdir(from_path)
         for names in items:
@@ -27,13 +27,13 @@ def delete_dup_file():
             #     print("info: no duplicate files found")
         # print("Deleting: Some file with the same name is already there")
         for name,path in file_to_del.items():
-                print("Deleting: "+name+" file with the same name is already there")
+                print("\nDeleting: "+name+" file with the same name is already there")
                 os.remove(path)
-                print("success: Done Deleting"+name)
+                print("\nsuccess: Done Deleting"+name)
     else:
-        print("info: Ignoring duplicate files in downloads")
+        print("\ninfo: Ignoring duplicate files in downloads")
 
-def find_file():
+def find_file(from_path):
     while(True):
         items = os.listdir(from_path)
         for names in items:
@@ -41,7 +41,7 @@ def find_file():
                 filename = names
                 return filename
             else:
-                print("info: waiting for file to download")
+                print("\ninfo: waiting for file to download")
                 time.sleep(5)
 
 
@@ -111,7 +111,7 @@ print("\nSuccess: Clicked download report")
 
 time.sleep(2)
 # Move from downloads to this folder
-report_fname= find_file()
+report_fname= find_file(from_path)
 
 if(os.path.exists(from_path)):
     if platform == "linux" or platform == "linux2":
@@ -130,6 +130,14 @@ time.sleep(3)
 with zipfile.ZipFile(os.path.join(des_path,report_fname),"r") as zip_ref:
     zip_ref.extractall("zip")
 print("info: zip file extracted")
+
+
+zip_dir = os.path.join(des_path,"zip")
+csv_fname= find_file(zip_dir)
+# print(zip_dir)
+
+df = pandas.read_csv(os.path.join(zip_dir,csv_fname))
+print(df)
 
 
 print("\n\nComplete....")
