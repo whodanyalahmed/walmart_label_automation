@@ -129,7 +129,7 @@ time.sleep(3)
 
 with zipfile.ZipFile(os.path.join(des_path,report_fname),"r") as zip_ref:
     zip_ref.extractall("zip")
-print("info: zip file extracted")
+print("\ninfo: zip file extracted")
 
 
 zip_dir = os.path.join(des_path,"zip")
