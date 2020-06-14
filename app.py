@@ -1,6 +1,6 @@
 from selenium import webdriver
 import selenium
-import time,sys,os,shutil
+import time,sys,os,shutil,zipfile
 from sys import platform
 
 
@@ -30,7 +30,7 @@ def delete_dup_file():
             print("success: Done Deleting"+name)
 
 
-def find_file():
+def find_file(from_path):
     while(True):
         items = os.listdir(from_path)
         for names in items:
@@ -108,7 +108,7 @@ print("\nSuccess: Clicked download report")
 
 time.sleep(2)
 # Move from downloads to this folder
-report_fname= find_file()
+report_fname= find_file(des_path)
 
 if(os.path.exists(from_path)):
     if platform == "linux" or platform == "linux2":
@@ -119,8 +119,13 @@ shutil.move(from_path,des_path)
 print("Success: moving file.")
 
 
-
 driver.close()
 print("success: closed window.")
+
+time.sleep(3)
+
+with zipfile.ZipFile(os.path.join(des_path,report_fname),"r") as zip_ref:
+    zip_ref.extractall("zip")
+
 
 print("\n\nComplete....")

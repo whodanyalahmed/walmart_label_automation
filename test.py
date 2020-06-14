@@ -1,4 +1,4 @@
-import os,sys,shutil
+import os,sys,shutil,zipfile,time
 from sys import platform
 # des_path = sys.path[0]
 
@@ -26,39 +26,20 @@ from sys import platform
 #     from_path = from_path+"\\"+find_file()
     
 
-# print(from_path)
-
-
 
 # current working path
 des_path = sys.path[0]
-# Detecting linux or windows
-if platform == "linux" or platform == "linux2":
-    from_path = str(sys.path[4]).replace(".local/lib/python3.8/site-packages",
-    "Downloads")
-    print(from_path)
-else:
-    from_path = str(sys.path[-1]).replace("AppData\\Local\\Programs\\Python\\Python38-32\\lib\\site-packages",
-    "Downloads")
-
-
-def delete_dup_file():
-    print("info: Checking duplicate files. ")
-    file_to_del = {}
-    items = os.listdir(from_path)
+    
+def find_file():
+    items = os.listdir(des_path)
     for names in items:
-                if names.startswith("ItemReport"):
-                    full_file_path = os.path.join(from_path, names)
-                    file_to_del[names] = full_file_path
-                else:
-                    print("info: no duplicate files found")
-        # print("Deleting: Some file with the same name is already there")
-    for name,path in file_to_del.items():
-            print("Deleting: "+name+" file with the same name is already there")
-            os.remove(path)
-            print("success: Done Deleting"+name)
+        if names.startswith("ItemReport"):
+            print(names)
+            filename = names
+            return filename
+        else:
+            print("info: waiting for file to download")
 
-
-
-
-delete_dup_file()
+report_fname= find_file()
+with zipfile.ZipFile(os.path.join(des_path,report_fname),"r") as zip_ref:
+    zip_ref.extractall("zip")
