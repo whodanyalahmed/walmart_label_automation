@@ -18,11 +18,11 @@ def delete_dup_file():
     file_to_del = {}
     items = os.listdir(from_path)
     for names in items:
-                if names.startswith("ItemReport"):
-                    full_file_path = os.path.join(from_path, names)
-                    file_to_del[names] = full_file_path
-                else:
-                    print("info: no duplicate files found")
+        if names.startswith("ItemReport"):
+            full_file_path = os.path.join(from_path, names)
+            file_to_del[names] = full_file_path
+        else:
+            print("info: no duplicate files found")
     # print("Deleting: Some file with the same name is already there")
     for name,path in file_to_del.items():
             print("Deleting: "+name+" file with the same name is already there")
@@ -106,8 +106,7 @@ driver.find_element_by_css_selector('button.wm-btn-blue.btn-download').click()
 print("\nSuccess: Clicked download report")
 
 
-
-
+time.sleep(2)
 # Move from downloads to this folder
 report_fname= find_file()
 
@@ -118,5 +117,10 @@ if(os.path.exists(from_path)):
         from_path = from_path+"\\"+report_fname
 shutil.move(from_path,des_path)
 print("Success: moving file.")
+
+
+
+driver.close()
+print("success: closed window.")
 
 print("\n\nComplete....")
