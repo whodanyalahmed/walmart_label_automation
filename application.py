@@ -106,11 +106,12 @@ driver.find_element_by_xpath("//button[@data-sel-id='ExportButton']").click()
 print("\nSuccess: Clicked on Download")
 # driver.find_element_by_link_text("Download").click()
 # driver.find_element_by_tag_name("label").click()
-time.sleep(10)
-# click download report
-driver.find_element_by_css_selector('button.wm-btn-blue.btn-download').click()
+time.sleep(15)
+# click Export All Items
+# driver.find_element_by_css_selector('button.wm-btn-blue.btn-download').click()
+driver.find_element_by_xpath("//ul[@class='dwnld-dropdown']/li[3]").click()
 
-print("\nSuccess: Clicked download report")
+print("\nSuccess: Clicked Export All item")
 
 
 time.sleep(2)
@@ -129,21 +130,21 @@ print("\nSuccess: moved file.")
 driver.close()
 print("\nsuccess: closed window.")
 
-time.sleep(3)
+# time.sleep(3)
 
 # with zipfile.ZipFile(os.path.join(des_path,report_fname),"r") as zip_ref:
 #     zip_ref.extractall(join(des_path,"zip"))
 # print("\ninfo: zip file extracted")
 
-time.sleep(3)
+# time.sleep(3)
 
-zip_dir = os.path.join(des_path,"zip")
-csv_fname= find_file(zip_dir)
-print(csv_fname)
+# zip_dir = os.path.join(des_path,"zip")
+# csv_fname= find_file(zip_dir)
+# print(csv_fname)
 # print(zip_dir)
 
-df = pandas.read_csv(os.path.join(zip_dir,csv_fname))
-print(df['VENDOR ID'])
+# df = pandas.read_csv(os.path.join(zip_dir,csv_fname))
+# print(df['VENDOR ID'])
 
 
 print("\n\nComplete....")
