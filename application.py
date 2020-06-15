@@ -14,26 +14,26 @@ def resource_path(relative_path):
         base_path = os.path.dirname(__file__)
     return os.path.join(base_path, relative_path)
 
-def delete_dup_file():
-    prompt = input("prompt: You wanted to Delete all files with the name ItemReport in Downloads:(y/n) ")
-    if(prompt == "y" or prompt == "Y"):
-        print("\ninfo: Checking duplicate files. ")
-        file_to_del = {}
-        items = os.listdir(from_path)
-        for names in items:
+# def delete_dup_file():
+#     prompt = input("prompt: You wanted to Delete all files with the name ItemReport in Downloads:(y/n) ")
+#     if(prompt == "y" or prompt == "Y"):
+#         print("\ninfo: Checking duplicate files. ")
+#         file_to_del = {}
+#         items = os.listdir(from_path)
+#         for names in items:
             
-            if names.startswith("ItemReport"):
-                full_file_path = os.path.join(from_path, names)
-                file_to_del[names] = full_file_path
-            # else:
-            #     print("info: no duplicate files found")
-        # print("Deleting: Some file with the same name is already there")
-        for name,path in file_to_del.items():
-                print("\nDeleting: "+name+" file with the same name is already there")
-                os.remove(path)
-                print("\nsuccess: Done Deleting"+name)
-    else:
-        print("\ninfo: Ignoring duplicate files in downloads")
+#             if names.startswith("ItemReport"):
+#                 full_file_path = os.path.join(from_path, names)
+#                 file_to_del[names] = full_file_path
+#             # else:
+#             #     print("info: no duplicate files found")
+#         # print("Deleting: Some file with the same name is already there")
+#         for name,path in file_to_del.items():
+#                 print("\nDeleting: "+name+" file with the same name is already there")
+#                 os.remove(path)
+#                 print("\nsuccess: Done Deleting"+name)
+#     else:
+#         print("\ninfo: Ignoring duplicate files in downloads")
 
 def find_file(from_path):
     while(True):
@@ -65,7 +65,7 @@ else:
     from_path = str(sys.path[-1]).replace("AppData\\Local\\Programs\\Python\\Python38-32\\lib\\site-packages",
     "Downloads")
 
-delete_dup_file()
+# delete_dup_file()
 
 
 driver =webdriver.Chrome(path)
@@ -93,18 +93,20 @@ while(True):
         print("\nwaiting: user input...")
         time.sleep(5)
     else:
+        driver.get('https://supplier.walmart.com/orderManagement')
+        time.sleep(3)
         print("\nsuccess: Going to dashboard")
         break
 
 # click download
 time.sleep(3)
 # driver.find_element_by_class_name("icon-download").click()
-driver.find_element_by_css_selector("button.icon-download").click()
-
+# driver.find_element_by_css_selector("button.icon-download").click()
+driver.find_element_by_xpath("//button[@data-sel-id='ExportButton']").click()
 print("\nSuccess: Clicked on Download")
 # driver.find_element_by_link_text("Download").click()
 # driver.find_element_by_tag_name("label").click()
-time.sleep(3)
+time.sleep(10)
 # click download report
 driver.find_element_by_css_selector('button.wm-btn-blue.btn-download').click()
 
@@ -129,9 +131,9 @@ print("\nsuccess: closed window.")
 
 time.sleep(3)
 
-with zipfile.ZipFile(os.path.join(des_path,report_fname),"r") as zip_ref:
-    zip_ref.extractall(join(des_path,"zip"))
-print("\ninfo: zip file extracted")
+# with zipfile.ZipFile(os.path.join(des_path,report_fname),"r") as zip_ref:
+#     zip_ref.extractall(join(des_path,"zip"))
+# print("\ninfo: zip file extracted")
 
 time.sleep(3)
 
