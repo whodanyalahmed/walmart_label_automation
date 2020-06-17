@@ -10,10 +10,7 @@ from sys import platform
 print("\n\nProcessing.....")
 
 def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.dirname(__file__)
+    base_path = sys.path[0]
     return os.path.join(base_path, relative_path)
 
 def delete_dup_file():

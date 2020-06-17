@@ -68,6 +68,20 @@ csv_fname= find_file(des_path)
 # print(csv_fname)
 # print(zip_dir)
 
-df = pandas.read_excel(os.path.join(des_path,csv_fname))
-cus_df = df[['PO#','Customer Name','Customer Phone Number','Ship to Address 1','Ship to Address 2','City','State','Zip','SKU','Item Description','Qty','Carrier','Package ASN']]
-print(cus_df)
+
+
+# Code for tracking update
+
+# df = pandas.read_excel(os.path.join(des_path,csv_fname))
+# tracking_num = [3415135,1245135,13515,13513] 
+# # cus_df = df[['PO#','Customer Name','Customer Phone Number','Ship to Address 1','Ship to Address 2','City','State','Zip','SKU','Item Description','Qty','Carrier','Package ASN','Tracking Number']]
+
+# c = 0
+# while(c <= len(df)-1):
+#     df['Tracking Number'][c] = tracking_num[c]
+#     c += 1
+
+
+# df.to_excel(des_path + "/temp.xlsx")  
+
+# print(df)
