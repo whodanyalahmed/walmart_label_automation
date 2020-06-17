@@ -85,7 +85,7 @@ time.sleep(3)
 # enter email
 email = driver.find_element_by_xpath("//input[@class='form-control__formControl___3uDUX']").send_keys('developer@poschsports.com')
 # enter pass
-driver.find_element_by_xpath("//input[@data-automation-id='pwd']").send_keys("State.320")
+driver.find_element_by_xpath("//input[@data-automation-id='pwd']").send_keys("password")
 
 while(True):
     if(driver.title == "Retail Link"):
