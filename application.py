@@ -14,37 +14,36 @@ def resource_path(relative_path):
         base_path = os.path.dirname(__file__)
     return os.path.join(base_path, relative_path)
 
-# def delete_dup_file():
-#     prompt = input("prompt: You wanted to Delete all files with the name ItemReport in Downloads:(y/n) ")
-#     if(prompt == "y" or prompt == "Y"):
-#         print("\ninfo: Checking duplicate files. ")
-#         file_to_del = {}
-#         items = os.listdir(from_path)
-#         for names in items:
+def delete_dup_file():
+    prompt = input("prompt: You wanted to Delete all files with the name ItemReport in Downloads:(y/n) ")
+    if(prompt == "y" or prompt == "Y"):
+        print("\ninfo: Checking duplicate files. ")
+        file_to_del = {}
+        items = os.listdir(from_path)
+        for names in items:
             
-#             if names.startswith("ItemReport"):
-#                 full_file_path = os.path.join(from_path, names)
-#                 file_to_del[names] = full_file_path
-#             # else:
-#             #     print("info: no duplicate files found")
-#         # print("Deleting: Some file with the same name is already there")
-#         for name,path in file_to_del.items():
-#                 print("\nDeleting: "+name+" file with the same name is already there")
-#                 os.remove(path)
-#                 print("\nsuccess: Done Deleting"+name)
-#     else:
-#         print("\ninfo: Ignoring duplicate files in downloads")
+            if names.startswith("PO_Data"):
+                full_file_path = os.path.join(from_path, names)
+                file_to_del[names] = full_file_path
+            # else:
+            #     print("info: no duplicate files found")
+        # print("Deleting: Some file with the same name is already there")
+        for name,path in file_to_del.items():
+                print("\nDeleting: "+name+" file with the same name is already there")
+                os.remove(path)
+                print("\nsuccess: Done Deleting"+name)
+    else:
+        print("\ninfo: Ignoring duplicate files in downloads")
 
 def find_file(from_path):
     while(True):
         items = os.listdir(from_path)
         for names in items:
-            if names.startswith("ItemReport"):
+            if names.startswith("PO_Data"):
                 filename = names
                 return filename
             else:
                 print("\ninfo: waiting for file to download")
-                time.sleep(5)
 
 
 
@@ -65,7 +64,7 @@ else:
     from_path = str(sys.path[-1]).replace("AppData\\Local\\Programs\\Python\\Python38-32\\lib\\site-packages",
     "Downloads")
 
-# delete_dup_file()
+delete_dup_file()
 
 
 driver =webdriver.Chrome(path)
@@ -86,7 +85,7 @@ time.sleep(3)
 # enter email
 email = driver.find_element_by_xpath("//input[@class='form-control__formControl___3uDUX']").send_keys('developer@poschsports.com')
 # enter pass
-# driver.find_element_by_id("pwd").send_keys("developer@poschsports.com")
+driver.find_element_by_xpath("//input[@data-automation-id='pwd']").send_keys("State.320")
 
 while(True):
     if(driver.title == "Retail Link"):
@@ -106,11 +105,10 @@ driver.find_element_by_xpath("//button[@data-sel-id='ExportButton']").click()
 print("\nSuccess: Clicked on Download")
 # driver.find_element_by_link_text("Download").click()
 # driver.find_element_by_tag_name("label").click()
-time.sleep(15)
+time.sleep(3)
 # click Export All Items
 # driver.find_element_by_css_selector('button.wm-btn-blue.btn-download').click()
-driver.find_element_by_xpath("//ul[@class='dwnld-dropdown']/li[3]").click()
-
+driver.find_element_by_xpath("//li[text()='Export All Items']").click()
 print("\nSuccess: Clicked Export All item")
 
 
@@ -139,12 +137,12 @@ print("\nsuccess: closed window.")
 # time.sleep(3)
 
 # zip_dir = os.path.join(des_path,"zip")
-# csv_fname= find_file(zip_dir)
+csv_fname= find_file(des_path)
 # print(csv_fname)
 # print(zip_dir)
-
-# df = pandas.read_csv(os.path.join(zip_dir,csv_fname))
-# print(df['VENDOR ID'])
+df = pandas.read_excel(os.path.join(des_path,csv_fname))
+cus_df = df[['PO#','Customer Name','Customer Phone Number','Ship to Address 1','Ship to Address 2','City','State','Zip','SKU','Item Description','Qty','Carrier','Package ASN']]
+print(cus_df)
 
 
 print("\n\nComplete....")

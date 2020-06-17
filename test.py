@@ -7,12 +7,13 @@ def find_file(from_path):
     while(True):
         items = os.listdir(from_path)
         for names in items:
-            if names.startswith("ItemReport"):
+            # print(names)
+            if names.startswith("PO_Data"):
+                
                 filename = names
                 return filename
             else:
                 print("\ninfo: waiting for file to download")
-                time.sleep(5)
 
 
 
@@ -63,7 +64,10 @@ def find_file(from_path):
 # print(df)
 
 
-zip_dir = os.path.join(des_path,"zip")
-csv_fname= find_file(zip_dir)
-df = pandas.read_csv(os.path.join(zip_dir,csv_fname))
-print(df['VENDOR ID'])
+csv_fname= find_file(des_path)
+# print(csv_fname)
+# print(zip_dir)
+
+df = pandas.read_excel(os.path.join(des_path,csv_fname))
+cus_df = df[['PO#','Customer Name','Customer Phone Number','Ship to Address 1','Ship to Address 2','City','State','Zip','SKU','Item Description','Qty','Carrier','Package ASN']]
+print(cus_df)
